@@ -1,0 +1,1 @@
+<?php return array(	'DB_TYPE' => 'mysql',	'DB_HOST' => 'localhost',	'DB_NAME' => 'demo',	'DB_USER' => 'root',	'DB_PWD' => '123',	'______________D________________' => '1111111111111',);?>
