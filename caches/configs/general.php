@@ -31,7 +31,7 @@ return array(
 	
 	/* 默认认定 */
 	'DEFAULT_M_LAYER'       =>  'model', // 默认的模型层名称,注:在此如果为“.”表示为公共模型，
-    'DEFAULT_C_LAYER'       =>  'montroller', // 默认的控制器层名称
+    'DEFAULT_C_LAYER'       =>  'controller', // 默认的控制器层名称
     'DEFAULT_V_LAYER'       =>  'themes', // 默认的视图层名称,
     'DEFAULT_LANG'          =>  'zh-cn', // 默认语言
     'DEFAULT_THEME'         =>  '',	// 默认模板主题名称
@@ -39,7 +39,7 @@ return array(
 	'DEFAULT_CONFIG'		=>	'configs',	// 默认项目配置文件名称
     'DEFAULT_MODULE'        =>  'home',  // 默认模块
     'DEFAULT_CONTROLLER'    =>  'index', // 默认控制器名称
-    'DEFAULT_ACTION'        =>  'index', // 默认操作名称
+    'DEFAULT_ACTION'        =>  'init', // 默认操作名称
     'DEFAULT_CHARSET'       =>  'utf-8', // 默认输出编码
     'DEFAULT_TIMEZONE'      =>  'PRC',	// 默认时区
 	

@@ -20,7 +20,7 @@
  */
  
 class application{
-	
+	private $_cfg_data;
 	/**
 	 * 构造函数	
 	 * @version	1.0
@@ -37,39 +37,54 @@ class application{
 		 * 
 		 * 后期，可以自动生存一个简单的项目架构。
 		 *
-		 * 
 		 */
-		
-		// 项目路径
-		$_app_path = _ET_APP_PATH_.DIRECTORY_SEPARATOR._ET_APP_NAME_.DIRECTORY_SEPARATOR;
-		
-		$_sys_config = C('general'); 
+		$this->_cfg_data = c2c_merge('general');
 		// 判断项目是否存在
-		if(is_dir($_app_path)) {
+		if(is_dir(_ET_PROJECT_PATH)) {
 			/**
 			 * 1.项目存在，检查项目下的配置文件
 			 * 2.获取项目配置
 			 */
 			$_cls_param = F('param');
-			//print_r(c2c_merge(array('general')));
-			
-			// 项目下默认的
-			/*$_app_config = C('general','','','app');
-			
-			define("M", $_app_config['DEFAULT_MODULE'] ? $_app_config['DEFAULT_MODULE'] : $_sys_config['DEFAULT_MODULE']);
-			define('C', $_app_config['DEFAULT_CONTROLLER'] ? $_app_config['DEFAULT_CONTROLLER'] : $_sys_config['DEFAULT_CONTROLLER']);
-			define('A', $_app_config['DEFAULT_ACTION'] ? $_app_config['DEFAULT_ACTION'] : $_sys_config['DEFAULT_ACTION']);*/
-			//$_config = array_merge($_app_config,$_sys_config);
-			//print_r($_app_config);
-			
+			define("_M_", $_cls_param->m());
+			define("_C_", $_cls_param->c());
+			define("_A_", $_cls_param->a());
+			self::init();
 		}else{
 			exit('APPNAME does not exits.');
 		}
-		//$config = etPHP::load_sys_config('');
 	}
-	
-	private function _load_controller($filename)
+	private function init()
 	{
+		$controller = self::_load_controller();
+		if (method_exists($controller, _A_)) {
+			if (preg_match("/^[_]/i", _A_)) {
+				exit('Action is protected.');
+			} else {
+				call_user_func(array($controller, _A_));
+			}
+		} else {
+			exit('Action does not exist.');
+		}
+	}
+	private function _load_controller($filename = '', $m = '')
+	{
+		if (empty($filename)) $filename = _C_;
+		if (empty($m)) $m = _M_;
+		$path = _ET_PROJECT_PATH . $m . DIRECTORY_SEPARATOR . $this->_cfg_data['DEFAULT_C_LAYER'] . DIRECTORY_SEPARATOR . $filename . '.php';
+		
+		if(file_exists($path)) {
+			$classname = $filename;
+			include $path;
+			
+			if (class_exists($classname)) {
+				return new $classname;
+			} else {
+				exit('Controller does not exist.');
+			}
+		} else {
+			exit('Controller does not exist.');
+		}
 		
 	}
 }

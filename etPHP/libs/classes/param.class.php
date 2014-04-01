@@ -21,10 +21,11 @@
  */
  class param
  {
+ 	private $_cfg_data;
  	function __construct()
  	{
  		//$_config_data = C('general');
- 		$_cfg_data = c2c_merge('general');
+ 		$this->_cfg_data = $_cfg_data = c2c_merge('general');
  		
  		// 最后URL参数存放的变量
  		$last_url_params = array();
@@ -32,25 +33,8 @@
  		switch ($_cfg_data['URL_MODEL'])
  		{
  			default:
- 			case 0 :
- 				echo 1;
- 				break;
  			case 1 :
  				$_path_info = $_SERVER['PATH_INFO'];
- 				/*if(empty($_path_info)) exit('PATH_INFO Unable to your server.Please check your server configuration and try again.');
- 				$_p = explode($_cfg_data['URL_PATHINFO_DEPR'], $_path_info);
- 				
- 				/*if (empty($m)) $m = $_cfg_data['DEFAULT_MODULE'];
- 				if (empty($c)) $c = $_cfg_data['DEFAULT_CONTROLLER'];
- 				if (empty($a)) $a = $_cfg_data['DEFAULT_ACTION'];
- 				echo count($_p);
- 				unset($_p[0]);
- 				print_r($_p);
- 				if(count($_p) <= 2){
- 					echo 1;
- 				}
- 				echo $_path_info;*/
- 				
  				if(!empty($_path_info)) {
  					/**
  					 * 这种方式表示使用PATH_INFO的方式来处理URL
@@ -70,21 +54,36 @@
  					for ($i = 4 ; $i < $_len ; $i += 2) {
  						$last_url_params[$url_params[$i]] = ($i + 2) == $_len ? array_shift(explode("~", $url_params[$i+1])) : $url_params[$i+1];
  					}
- 					
  				} else {
- 					$_p = array(
+ 					$last_url_params = array(
  						'm' => $_cfg_data['DEFAULT_MODULE'],
  						'c' => $_cfg_data['DEFAULT_CONTROLLER'],
  						'a' => $_cfg_data['DEFAULT_ACTION']
  					);
  				}
  				break;
+ 			case 0 :
+ 				exit('I\'m sorry!This method is not implemented.');
+ 				break;
+ 			case 2 :
+ 				exit('I\'m sorry!This method is not implemented.');
+ 				break;
  		}
- 		print_r($last_url_params);
+		
+ 		// 合并GET的参数
+ 		$_GET = array_merge($_GET, $last_url_params);
  	}
- 	private function tagMatch()
- 	{
- 		
+ 	
+ 	function m() {
+ 		return $_GET['m'] ? $_GET['m'] : $this->_cfg_data['DEFAULT_MODULE'];
+ 	}
+ 	
+ 	function c() {
+ 		return $_GET['c'] ? $_GET['c'] : $this->_cfg_data['DEFAULT_CONTROLLER'];
+ 	}
+ 	
+ 	function a() {
+ 		return $_GET['a'] ? $_GET['a'] : $this->_cfg_data['DEFAULT_ACTION'];
  	}
  }
  ?>

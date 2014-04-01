@@ -1,11 +1,15 @@
 <?php 
 
-class index 
+class index
 {
 	
-	function index()
+	public function init()
 	{
-		
+		echo 'xx';
+	}
+	public function _a()
+	{ 
+		echo 2;
 	}
 }
 ?>

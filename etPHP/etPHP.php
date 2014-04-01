@@ -33,7 +33,8 @@ defined('_ET_DEBUG_') or define('_ET_DEBUG_', FALSE);
 defined('_ET_APP_PATH_') or define('_ET_APP_PATH_', dirname(__FILE__));
 // 定义项目默认名字
 defined('_ET_APP_NAME_') or define('_ET_APP_NAME_', etPHP::load_sys_config('general','DEFAULT_APP'));
-
+// 定义项目路径
+define('_ET_PROJECT_PATH', _ET_APP_PATH_ . DIRECTORY_SEPARATOR . _ET_APP_NAME_ . DIRECTORY_SEPARATOR);
 // 加载系统函数库
 etPHP::load_sys_func('common');
 
